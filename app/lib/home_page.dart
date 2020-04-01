@@ -1,4 +1,5 @@
 import 'package:covid_19_app/covid_visualizer/covid_visualizer_page.dart';
+import 'package:covid_19_app/feed/feed_page.dart';
 import 'package:covid_19_app/guidelines/guidelines_page.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,13 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               child: Text("Guidelines"),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => GuidelinesPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  GuidelinesPage()));
+              },
+            ),
+            RaisedButton(
+              child: Text("Feed Page"),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FeedPage()));
               },
             ),
           ],
