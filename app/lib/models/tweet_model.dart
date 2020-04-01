@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class TweetModel {
   
   final String tweet;
   final String handle;
-  final String time;
+  final Timestamp time;
   final String link;
 
   TweetModel({

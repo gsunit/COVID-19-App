@@ -1,8 +1,8 @@
 import 'package:covid_19_app/models/tweet_model.dart';
 import 'package:covid_19_app/util/custom_icons.dart';
+import 'package:covid_19_app/util/util_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 class TweetCard extends StatefulWidget {
   final TweetModel tweet;
   TweetCard({
@@ -49,8 +49,8 @@ class _TweetCardState extends State<TweetCard> {
   }
 
   _buildText() {
-    var date = "8888";
-    var time = "7777";
+    var date = UtilFunctions().parseDate(widget.tweet.time.toDate().toString(), 'd MMM,');
+    var time = UtilFunctions().parseTime(widget.tweet.time.toDate().toString(), 'kk:mm');
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0, top: 6.0),
       child: Column(
