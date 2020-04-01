@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'dart:convert';
+import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -22,9 +23,8 @@ class _CovidVisualizerPageState extends State<CovidVisualizerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Global Visualizer"),
-        backgroundColor: Colors.black,
+      appBar: customAppbar(
+        title: "Global Visualizer",
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.info),
@@ -33,6 +33,7 @@ class _CovidVisualizerPageState extends State<CovidVisualizerPage> {
             }
           )
         ],
+        color: Colors.black
       ),
       body: Builder(builder: (BuildContext context) {
         return Stack(

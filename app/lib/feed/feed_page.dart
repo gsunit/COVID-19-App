@@ -1,3 +1,6 @@
+import 'package:covid_19_app/feed/govt_updates_page.dart';
+import 'package:covid_19_app/feed/news_feed_page.dart';
+import 'package:covid_19_app/feed/tweets_feed_page.dart';
 import 'package:covid_19_app/feed/video_feed_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
@@ -16,9 +19,6 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Feed Page"),
-      ),
       body: Container(
         decoration: BoxDecoration(color: Colors.white),
         child: Center(
@@ -28,21 +28,23 @@ class _FeedPageState extends State<FeedPage> {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(
-              iconData: Icons.home,
-              title: "Home",
-              onclick: () {
-                final FancyBottomNavigationState fState =
-                    bottomNavigationKey.currentState;
-                fState.setPage(2);
-              }),
+            iconData: Icons.textsms,
+            title: "Tweets",
+          ),
           TabData(
-              iconData: Icons.search,
-              title: "Search",
-              onclick: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => VideoFeedPage()))),
-          TabData(iconData: Icons.shopping_cart, title: "Basket")
+            iconData: Icons.video_library,
+            title: "Videos",
+          ),
+          TabData(
+            iconData: Icons.library_books,
+            title: "News"
+          ),
+          TabData(
+            iconData: Icons.home,
+            title: "Govt"
+          ),
         ],
-        initialSelection: 1,
+        initialSelection: 0,
         key: bottomNavigationKey,
         onTabChangedListener: (position) {
           setState(() {
@@ -56,68 +58,15 @@ class _FeedPageState extends State<FeedPage> {
   _getPage(int page) {
     switch (page) {
       case 0:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the home page"),
-            RaisedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => VideoFeedPage()));
-              },
-            ),
-            RaisedButton(
-              child: Text(
-                "Change to page 3",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                final FancyBottomNavigationState fState =
-                    bottomNavigationKey.currentState;
-                fState.setPage(2);
-              },
-            )
-          ],
-        );
+        return TweetsFeedPage();
       case 1:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the search page"),
-            RaisedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => VideoFeedPage()));
-              },
-            )
-          ],
-        );
+        return VideoFeedPage();
+      case 2:
+        return NewsFeedPage();
+      case 3:
+        return GovtUpdatesPage();
       default:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the basket page"),
-            RaisedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {},
-            )
-          ],
-        );
+        return TweetsFeedPage();
     }
   }
 }

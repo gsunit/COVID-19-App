@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:upi_india/upi_india.dart';
-import 'package:covid_19_app/utils/utils.dart';
+import 'package:covid_19_app/util/payments.dart';
+import 'package:covid_19_app/util/custom_appbar.dart';
 
 class PaymentsPage extends StatefulWidget {
   @override
@@ -54,9 +55,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text("Payments"),
-      ),
+      appBar: customAppbar(title: "Payments"),
       body: Column(
         children: <Widget>[
           Container(
