@@ -60,7 +60,8 @@ class _TweetsFeedPageState extends State<TweetsFeedPage> {
                                                 handle: snapshot.data.documents[index]['handle'],
                                                 link: snapshot.data.documents[index]['link'],
                                                 time: snapshot.data.documents[index]['time'],
-                                                tweet: snapshot.data.documents[index]['tweet']
+                                                tweet: snapshot.data.documents[index]['tweet'],
+                                                hashTag: snapshot.data.documents[index]['hashTag']
                                               ),
                                             ),
                                           ),

@@ -49,8 +49,14 @@ class _TweetCardState extends State<TweetCard> {
   }
 
   _buildText() {
-    var date = UtilFunctions().parseDate(widget.tweet.time.toDate().toString(), 'd MMM,');
-    var time = UtilFunctions().parseTime(widget.tweet.time.toDate().toString(), 'kk:mm');
+    var date = " ";
+    var time = " ";
+
+    if(widget.tweet.time != null) {
+      date = UtilFunctions().parseDate(widget.tweet.time.toDate().toString(), 'd MMM,').toString();
+      time = UtilFunctions().parseTime(widget.tweet.time.toDate().toString(), 'kk:mm').toString();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 12.0, top: 6.0),
       child: Column(
@@ -59,24 +65,43 @@ class _TweetCardState extends State<TweetCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                widget.tweet.handle,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+              Row(
+                children: <Widget>[
+                  Text(
+                    widget.tweet.handle == null ? " " : widget.tweet.handle,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 17.0,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 2.0,),
+
+                  // Uncomment to show hashtag
+
+                  // Text(
+                  //   (widget.tweet.hashTag == null || widget.tweet.hashTag == "") ? "" : widget.tweet.hashTag,
+                  //   textAlign: TextAlign.left,
+                  //   style: TextStyle(
+                  //     fontSize: 17.0,
+                  //     color: Colors.black,
+                  //     fontWeight: FontWeight.bold),
+                  // )
+
+                ],
               ),
               Icon(CustomIcons.twitter, color: Colors.blue)
             ],
           ),
           SizedBox(height: 10.0,),
           Text(
+            (widget.tweet.tweet == null)
+            ? " " :
             (widget.tweet.tweet.length > 390)
             ? widget.tweet.tweet.substring(0, 390) + "..."
             : widget.tweet.tweet,
             style: TextStyle(
-              color: Colors.grey,
+              color: Colors.black,
             ),
           ),
           SizedBox(height: 10.0,),

@@ -7,12 +7,14 @@ class TweetModel {
   final String handle;
   final Timestamp time;
   final String link;
+  final String hashTag;
 
   TweetModel({
     @required this.tweet,
     @required this.handle,
     @required this.time,
     @required this.link,
+    @required this.hashTag,
   });
 
 }
