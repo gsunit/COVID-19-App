@@ -3,6 +3,7 @@ import 'package:covid_19_app/feed/feed_page.dart';
 import 'package:covid_19_app/guidelines/guidelines_page.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
 import 'package:covid_19_app/util/custom_appbar.dart';
+import 'package:covid_19_app/geolocation/geolocation.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -51,6 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsPage()));
               },
             ),
+            RaisedButton(
+              child: Text("Geolocation"),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GeolocationPage()));
+              },
+            )
           ],
         ),
       ),
