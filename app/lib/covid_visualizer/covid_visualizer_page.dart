@@ -23,18 +23,6 @@ class _CovidVisualizerPageState extends State<CovidVisualizerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Global Visualizer"),
-      //   backgroundColor: Colors.black,
-      //   actions: <Widget>[
-      //     IconButton(
-      //       icon: Icon(Icons.info),
-      //       onPressed: (){
-
-      //       }
-      //     )
-      //   ],
-      // ),
       appBar: customAppbar(
         title: "Global Visualizer",
         actions: <Widget>[
