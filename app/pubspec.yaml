@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   webview_flutter: ^0.3.19+9
   fancy_bottom_navigation: ^0.3.2
+  upi_india: ^1.1.1
+  rect_getter: ^0.1.0
 
 dev_dependencies:
   flutter_test:
