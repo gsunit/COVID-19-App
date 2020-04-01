@@ -1,3 +1,4 @@
+import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class PaymentsPage extends StatefulWidget {
@@ -9,9 +10,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Payments"),
-      ),
+      appBar: customAppbar(title: "Payments")
     );
   }
 }

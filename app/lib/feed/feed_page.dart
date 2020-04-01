@@ -1,3 +1,4 @@
+import 'package:covid_19_app/feed/govt_updates_page.dart';
 import 'package:covid_19_app/feed/news_feed_page.dart';
 import 'package:covid_19_app/feed/tweets_feed_page.dart';
 import 'package:covid_19_app/feed/video_feed_page.dart';
@@ -27,19 +28,21 @@ class _FeedPageState extends State<FeedPage> {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(
-              iconData: Icons.textsms,
-              title: "Tweets",
-              onclick: () {
-                final FancyBottomNavigationState fState =
-                    bottomNavigationKey.currentState;
-                fState.setPage(2);
-              }),
+            iconData: Icons.textsms,
+            title: "Tweets",
+          ),
           TabData(
-              iconData: Icons.video_library,
-              title: "Videos",
-              onclick: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => VideoFeedPage()))),
-          TabData(iconData: Icons.shopping_cart, title: "Basket")
+            iconData: Icons.video_library,
+            title: "Videos",
+          ),
+          TabData(
+            iconData: Icons.library_books,
+            title: "News"
+          ),
+          TabData(
+            iconData: Icons.home,
+            title: "Govt"
+          ),
         ],
         initialSelection: 0,
         key: bottomNavigationKey,
@@ -60,6 +63,8 @@ class _FeedPageState extends State<FeedPage> {
         return VideoFeedPage();
       case 2:
         return NewsFeedPage();
+      case 3:
+        return GovtUpdatesPage();
       default:
         return TweetsFeedPage();
     }

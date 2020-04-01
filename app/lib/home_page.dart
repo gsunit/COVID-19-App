@@ -2,6 +2,7 @@ import 'package:covid_19_app/covid_visualizer/covid_visualizer_page.dart';
 import 'package:covid_19_app/feed/feed_page.dart';
 import 'package:covid_19_app/guidelines/guidelines_page.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
+import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -18,9 +19,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
+      appBar: customAppbar(title: widget.title),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
