@@ -1,6 +1,7 @@
 import 'package:covid_19_app/covid_visualizer/covid_visualizer_page.dart';
 import 'package:covid_19_app/feed/feed_page.dart';
 import 'package:covid_19_app/guidelines/guidelines_page.dart';
+import 'package:covid_19_app/payments/payments_page.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -37,9 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             RaisedButton(
-              child: Text("Feed Page"),
+              child: Text("Feed"),
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => FeedPage()));
+              },
+            ),
+            RaisedButton(
+              child: Text("Payments"),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsPage()));
               },
             ),
           ],
