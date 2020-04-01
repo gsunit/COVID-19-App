@@ -131,7 +131,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                 ],
               )),
           Expanded(
-            flex: 0,
+            flex: 2,
             child: FutureBuilder(
               future: _transaction,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
