@@ -2,6 +2,7 @@ import 'package:covid_19_app/feed/govt_updates_page.dart';
 import 'package:covid_19_app/feed/news_feed_page.dart';
 import 'package:covid_19_app/feed/tweets_feed_page.dart';
 import 'package:covid_19_app/feed/video_feed_page.dart';
+import 'package:covid_19_app/util/custom_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
   
@@ -28,7 +29,7 @@ class _FeedPageState extends State<FeedPage> {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(
-            iconData: Icons.textsms,
+            iconData: CustomIcons.twitter,
             title: "Tweets",
           ),
           TabData(

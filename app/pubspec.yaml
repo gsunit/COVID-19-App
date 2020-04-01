@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   webview_flutter: ^0.3.19+9
   fancy_bottom_navigation: ^0.3.2
+  upi_india: ^1.1.1
+  rect_getter: ^0.1.0
   url_launcher: ^5.4.2
   intl: ^0.16.1
   flutter_easyrefresh: ^2.1.0
@@ -47,9 +49,13 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  assets:
+   - ./assets/twitter.png
+  
+  fonts:
+    - family: custom_icons
+      fonts:
+        - asset: assets/fonts/twitter_icon.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
