@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covid_19_app/feed/tweet_card.dart';
 import 'package:covid_19_app/models/tweet_model.dart';
 import 'package:covid_19_app/util/custom_appbar.dart';
@@ -27,45 +28,58 @@ class _TweetsFeedPageState extends State<TweetsFeedPage> {
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: EasyRefresh.custom(
-                    header: BallPulseHeader(color: Colors.blue),
-                    footer: BallPulseFooter(),
-                    onRefresh: _handleRefresh,
-                    key: _refreshIndicatorKey,
-                    slivers: <Widget>[
-                      AnimationLimiter(
-                        child: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                duration: const Duration(milliseconds: 300),
-                                  child: SlideAnimation(
-                                    child: FadeInAnimation(
-                                      child: TweetCard(
-                                      tweet: new TweetModel(
-                                        handle: "@who",
-                                        link: "https://twitter.com/WHO/status/1244950413490741248",
-                                        time: "9999",
-                                        tweet: "#COVID19 home-caregivers: Ensure ill person rests, drinks plenty fluids & eats nutritiously Wear Face with medical mask when in same room Clean Raising hands frequently Use dedicated Fork and knife with plate Glass of milk towel & bedlinen for ill person Disinfect surfaces touched by ill person Telephone receiver healthcare facility if person has difficulty breathing"
-                                      ),
-                                    ),
+            child: StreamBuilder(
+              stream: Firestore.instance.collection('tweets').snapshots(),
+              builder: (BuildContext context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return CircularProgressIndicator();
+                }
+                if(snapshot.hasData) {
+                  if(snapshot.data != null) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: EasyRefresh.custom(
+                            header: BallPulseHeader(color: Colors.blue),
+                            footer: BallPulseFooter(),
+                            onRefresh: _handleRefresh,
+                            key: _refreshIndicatorKey,
+                            slivers: <Widget>[
+                              AnimationLimiter(
+                                child: SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) {
+                                      return AnimationConfiguration.staggeredList(
+                                        position: index,
+                                        duration: const Duration(milliseconds: 300),
+                                          child: SlideAnimation(
+                                            child: FadeInAnimation(
+                                              child: TweetCard(
+                                              tweet: new TweetModel(
+                                                handle: snapshot.data.documents[index]['handle'],
+                                                link: snapshot.data.documents[index]['link'],
+                                                time: snapshot.data.documents[index]['time'],
+                                                tweet: snapshot.data.documents[index]['tweet'],
+                                                hashTag: snapshot.data.documents[index]['hashTag']
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    childCount: snapshot.data.documents.length,
                                   ),
                                 ),
-                              );
-                            },
-                            childCount: 2,
+                              )
+                            ],
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                        )
+                      ],
+                    );
+                  }
+                }
+              },
             ),
           ),
         ),
