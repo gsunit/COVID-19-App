@@ -21,4 +21,5 @@ class CustomIcons {
   static const _kFontFam = 'custom_icons';
 
   static const IconData twitter = IconData(0xe800, fontFamily: _kFontFam);
+  static const IconData youtube = IconData(0xf16a, fontFamily: _kFontFam);
 }
