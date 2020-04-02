@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               UserStatusWidget(user: widget.user,),
               SizedBox(height: 15.0),
-              Text("Check the app regularly to determine if you are at risk.", style: TextStyle(),),
+              // Text("Check the app regularly to determine if you are at risk.", style: TextStyle(),),
               SizedBox(height: 15.0,),
               Divider(
                 color: Colors.grey,

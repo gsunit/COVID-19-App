@@ -1,10 +1,7 @@
 import 'package:covid_19_app/feed/govt_updates_page.dart';
 import 'package:covid_19_app/feed/news_feed_page.dart';
 import 'package:covid_19_app/feed/tweets_feed_page.dart';
-import 'package:covid_19_app/feed/video_feed_page.dart';
 import 'package:covid_19_app/fonts/globe_icon.dart';
-import 'package:covid_19_app/fonts/india_icon.dart';
-import 'package:covid_19_app/fonts/twitter_icon.dart';
 import 'package:covid_19_app/webview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';

@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                     email: "test@test.com",
                     name: "test test",
                     photo: "",
-                    status: "unsafe",
+                    status: "safe",
                     uid: ""
                   ),
                 )));
