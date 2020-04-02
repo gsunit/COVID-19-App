@@ -112,6 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               SizedBox(height: 25.0,),
+              Text("Did you take your Vitamin-C today?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
+              SizedBox(height: 25.0,),
+              ReverseCountdown(),
+              SizedBox(height: 25.0,),
               Image.asset("./assets/who.png"),
               // SizedBox(height: 25.0,),
               // Text("More information on COVID-19", style: TextStyle(fontSize: 16.0, color: Colors.black45)),
@@ -143,10 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   )));
                 },
               ),
-              SizedBox(height: 25.0,),
-              Text("Did you take your Vitamin-C today?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-              SizedBox(height: 25.0,),
-              ReverseCountdown(),
+              
             ],
           ),
         ),
