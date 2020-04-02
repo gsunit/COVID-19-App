@@ -1,8 +1,14 @@
-import 'dart:async';
-// import 'dart:convert';
-import 'package:covid_19_app/util/custom_appbar.dart';
+import 'package:covid_19_app/feed/govt_updates_page.dart';
+import 'package:covid_19_app/feed/news_feed_page.dart';
+import 'package:covid_19_app/feed/tweets_feed_page.dart';
+import 'package:covid_19_app/feed/video_feed_page.dart';
+import 'package:covid_19_app/fonts/globe_icon.dart';
+import 'package:covid_19_app/fonts/india_icon.dart';
+import 'package:covid_19_app/fonts/twitter_icon.dart';
+import 'package:covid_19_app/webview_page.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
+  
 
 class CovidVisualizerPage extends StatefulWidget {
   @override
@@ -10,72 +16,80 @@ class CovidVisualizerPage extends StatefulWidget {
 }
 
 class _CovidVisualizerPageState extends State<CovidVisualizerPage> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
 
-  bool isLoaded;
-  @override
-  void initState() { 
-    super.initState();
-    isLoaded = false;
-  }
+  int currentPage = 0;
+  GlobalKey bottomNavigationKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(
-        title: "Global Visualizer",
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.info),
-            onPressed: (){
-
-            }
-          )
-        ],
-        color: Colors.black
+      body: Container(
+        decoration: BoxDecoration(color: Colors.white),
+        child: Center(
+          child: _getPage(currentPage),
+        ),
       ),
-      body: Builder(builder: (BuildContext context) {
-        return Stack(
-          children: <Widget>[
-            WebView(
-              initialUrl: 'https://www.covidvisualizer.com/',
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webViewController) {
-                _controller.complete(webViewController);
-              },
-              javascriptChannels: <JavascriptChannel>[
-                _toasterJavascriptChannel(context),
-              ].toSet(),
-              navigationDelegate: (NavigationRequest request) {
-                print('allowing navigation to $request');
-                return NavigationDecision.navigate;
-              },
-              onPageStarted: (String url) {
-                print('Page started loading: $url');
-              },
-              onPageFinished: (String url) {
-                print('Page finished loading: $url');
-                setState(() {
-                  isLoaded = true;
-                });
-              },
-              gestureNavigationEnabled: true,
-            ),
-            (isLoaded == false) ? Center(child: CircularProgressIndicator(),) : Container()
-          ],
-        );
-      }),
+      bottomNavigationBar: FancyBottomNavigation(
+        tabs: [
+          TabData(
+            iconData: GlobeIcon.globe,
+            title: "Global",
+          ),
+          TabData(
+            iconData: Icons.home,
+            title: "India",
+          ),
+        ],
+        initialSelection: 0,
+        key: bottomNavigationKey,
+        onTabChangedListener: (position) {
+          setState(() {
+            currentPage = position;
+          });
+        },
+      ),
     );
   }
 
-  JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
-    return JavascriptChannel(
-        name: 'Toaster',
-        onMessageReceived: (JavascriptMessage message) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
-        });
+  _getPage(int page) {
+  //   switch (page) {
+  //     case 0:
+  //       return WebviewPage(
+  //         title: "Global Visualizer",
+  //         url: 'https://www.covidvisualizer.com/',
+  //       );
+  //     case 1:
+  //       return WebviewPage(
+  //         title: "State Statistics",
+  //         url: "https://www.covid19india.org/",
+  //       );
+  //     default:
+  //       return WebviewPage(
+  //         title: "Global Visualizer",
+  //         url: 'https://www.covidvisualizer.com/',
+  //       );
+  //   }
+    switch (page) {
+      case 0:
+        return WebviewPage(
+          title: "Global Visualizer",
+          url: 'https://www.covidvisualizer.com/',
+        );
+      case 1:
+        return Container(
+          child: WebviewPage(
+            title: "State Statistics",
+            url: "https://www.covid19india.org/",
+          ),
+        );
+      case 2:
+        return NewsFeedPage();
+      case 3:
+        return GovtUpdatesPage();
+      default:
+        return TweetsFeedPage();
+    }
+      
   }
+  
 }

@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 5.0,),
               HomeTab(
-                title: "Global Visualizer",
+                title: "COVID-19 Statistics",
                 icon: GlobeIcon.globe,
                 color: Colors.lightGreen,
                 onTap: () {
