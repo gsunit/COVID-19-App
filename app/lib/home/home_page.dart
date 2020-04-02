@@ -5,6 +5,7 @@ import 'package:covid_19_app/fonts/india_icon.dart';
 import 'package:covid_19_app/fonts/twitter_icon.dart';
 import 'package:covid_19_app/home/home_links.dart';
 import 'package:covid_19_app/home/home_tab.dart';
+import 'package:covid_19_app/home/reverse_countdown.dart';
 import 'package:covid_19_app/home/user_status_widget.dart';
 import 'package:covid_19_app/models/user_model.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
@@ -82,14 +83,14 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              UserStatusWidget(user: widget.user,),
-              SizedBox(height: 15.0),
-              // Text("Check the app regularly to determine if you are at risk.", style: TextStyle(),),
-              SizedBox(height: 15.0,),
-              Divider(
-                color: Colors.grey,
-                thickness: 1.5,
-              ),
+              // UserStatusWidget(user: widget.user,),
+              // SizedBox(height: 15.0),
+              // // Text("Check the app regularly to determine if you are at risk.", style: TextStyle(),),
+              // SizedBox(height: 15.0,),
+              // Divider(
+              //   color: Colors.grey,
+              //   thickness: 1.5,
+              // ),
               SizedBox(height: 10.0,),
               Text("Stay updated. Stay safe.", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
               SizedBox(height: 15.0,),
@@ -111,7 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               SizedBox(height: 25.0,),
-              Text("More information on COVID-19", style: TextStyle(fontSize: 16.0, color: Colors.black45)),
+              Image.asset("./assets/who.png"),
+              // SizedBox(height: 25.0,),
+              // Text("More information on COVID-19", style: TextStyle(fontSize: 16.0, color: Colors.black45)),
               SizedBox(height: 10.0,),
               HomeLinks(
                 title: "Infection prevention and control",
@@ -139,7 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     url: 'https://www.who.int/health-topics/coronavirus/who-recommendations-to-reduce-risk-of-transmission-of-emerging-pathogens-from-animals-to-humans-in-live-animal-markets'
                   )));
                 },
-              )
+              ),
+              SizedBox(height: 25.0,),
+              Text("Did you take your Vitamin-C today?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
+              SizedBox(height: 25.0,),
+              ReverseCountdown(),
             ],
           ),
         ),
