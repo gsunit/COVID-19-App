@@ -64,7 +64,7 @@ class _VideoCardState extends State<VideoCard> {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                Image.network(widget.video.thumbnail),
+                (widget.video.thumbnail != null) ? Image.network(widget.video.thumbnail) : Container(),
                 Image.asset("./assets/youtube.png", height: 40.0,),
               ],
             ),
