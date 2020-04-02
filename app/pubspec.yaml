@@ -63,6 +63,7 @@ flutter:
    - ./assets/safe.jpg
    - ./assets/unsafe.jpg
    - ./assets/who.png
+   - ./assets/pmcares.jpeg
   
   fonts:
     - family: TwitterIcon

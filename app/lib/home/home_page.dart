@@ -93,6 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
               //   color: Colors.grey,
               //   thickness: 1.5,
               // ),
+
+
+
               SizedBox(height: 10.0,),
               Text("Stay updated. Stay safe.", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
               SizedBox(height: 15.0,),
@@ -114,6 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               SizedBox(height: 45.0,),
+
+
+
               Text("Did you take your Vitamin-C today?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
               SizedBox(height: 15.0,),
               ReverseCountdown(
@@ -122,6 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 hrs: widget.hrs,
               ),
               SizedBox(height: 45.0,),
+
+
+
+
               Image.asset("./assets/who.png"),
               // SizedBox(height: 25.0,),
               // Text("More information on COVID-19", style: TextStyle(fontSize: 16.0, color: Colors.black45)),
@@ -153,7 +163,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   )));
                 },
               ),
-              
+              SizedBox(height: 45.0,),
+
+
+
+
+              Text("Stretch out a helping hand", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
+              SizedBox(height: 15.0,),
+              Container(
+                child: Image.asset("./assets/pmcares.jpeg"),
+                height: 250.0,
+                alignment: Alignment.center,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: RaisedButton(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsPage()));
+                  },
+                  child: Text("Donate to PM Cares Fund", style: TextStyle(color: Colors.white)),
+                  color: Colors.lightGreen,
+                ),
+              ),
             ],
           ),
         ),
