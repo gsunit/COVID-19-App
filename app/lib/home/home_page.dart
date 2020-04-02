@@ -18,11 +18,13 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({
     Key key,
     @required this.title,
-    @required this.user
+    @required this.user,
+    @required this.hrs,
   }) : super(key: key);
 
   final String title;
   final UserModel user;
+  final int hrs;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -114,7 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 45.0,),
               Text("Did you take your Vitamin-C today?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
               SizedBox(height: 15.0,),
-              ReverseCountdown(),
+              ReverseCountdown(
+                user: widget.user,
+                homeTitle: widget.title,
+                hrs: widget.hrs,
+              ),
               SizedBox(height: 45.0,),
               Image.asset("./assets/who.png"),
               // SizedBox(height: 25.0,),

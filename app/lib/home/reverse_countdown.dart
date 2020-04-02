@@ -1,8 +1,20 @@
+import 'package:covid_19_app/home/home_page.dart';
+import 'package:covid_19_app/models/user_model.dart';
 import 'package:flip_panel/flip_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ReverseCountdown extends StatefulWidget {
+
+  ReverseCountdown({
+    @required this.homeTitle,
+    @required this.user,
+    @required this.hrs,
+  });
+
+  final String homeTitle;
+  final UserModel user;
+  final int hrs;
 
   @override
   _ReverseCountdownState createState() => _ReverseCountdownState();
@@ -10,6 +22,12 @@ class ReverseCountdown extends StatefulWidget {
 
 class _ReverseCountdownState extends State<ReverseCountdown> {
   final amtController = TextEditingController();
+
+  @override
+  void initState() { 
+    super.initState();
+    amtController.text = widget.hrs.toString();
+  }
 
   @override
   void dispose() {
@@ -26,10 +44,7 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
 
   @override
   Widget build(BuildContext context) {
-    dDay = (debugMode)
-        ? DateTime(now.year, now.month + 2, now.day, now.hour, now.minute,
-            now.second + 10)
-        : dDay;
+    dDay = _setDDay(widget.hrs, now);
 
     Duration _duration = dDay.difference(now);
 
@@ -42,7 +57,7 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
           ),
           SizedBox(height: 10.0,),
           FlipClock.reverseCountdown(
-            duration: _duration,
+            duration:  _duration,
             digitColor: Colors.white,
             backgroundColor: Colors.black,
             digitSize: 30.0,
@@ -54,20 +69,7 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               _buildButtons(),
-              Container(
-                width: 50.0,
-                child: TextFormField(
-                  controller: amtController,
-                  decoration: InputDecoration(
-                    // labelText: 'Time',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    WhitelistingTextInputFormatter.digitsOnly,
-                  ],
-                ),
-              ),
+              _buildInputForm(),
             ],
           ),
         ],
@@ -79,7 +81,9 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
     return Column(
       children: <Widget>[
         RaisedButton(
-          onPressed: (){},
+          onPressed: (){
+            _checkValidation(context);
+          },
           child: Text("Remind me daily at (hrs)", style: TextStyle(color: Colors.white)),
           color: Colors.lightGreen,
         ),
@@ -92,14 +96,59 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
     );
   }
 
-  void _checkValidation(BuildContext context, String appName) {
+  _buildInputForm() {
+    return Container(
+      width: 50.0,
+      child: TextFormField(
+        controller: amtController,
+        decoration: InputDecoration(
+          // labelText: 'Time',
+          border: OutlineInputBorder(),
+        ),
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          WhitelistingTextInputFormatter.digitsOnly,
+        ],
+      ),
+    );
+  }
+
+  void _checkValidation(BuildContext context) {
     if (amtController.text == "") {
       final snackBar = SnackBar(
         content: Text('Please enter the time'),
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
+    if(int.parse(amtController.text) > 23) {
+      final snackBar = SnackBar(
+        content: Text('Please enter a number between 0 and 23'),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
+    
+    // _duration = dDay.difference(now);
     // _transaction = initiateTransaction(appName, amtController.text);
-    setState(() {});
+    setState(() {
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
+        title: widget.homeTitle,
+        user: widget.user,
+        hrs: int.parse(amtController.text),
+      )));
+      final snackBar = SnackBar(
+        content: Text('Please enter a number between 0 and 23'),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    });
+  }
+
+  _setDDay(int hrs, DateTime now) {
+    if(hrs > now.hour) {
+      return DateTime(now.year, now.month, now.day, hrs, 0, 0);
+    }
+    else {
+      return DateTime(now.year, now.month, now.day+1, hrs, 0, 0);
+    }
   }
 }

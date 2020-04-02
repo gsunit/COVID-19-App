@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
                 Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
                   title: 'COVID-19 App',
+                  hrs: 15,
                   user: UserModel(
                     email: "test@test.com",
                     name: "test test",
