@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class GuidelinesPage extends StatefulWidget {
+class WebviewPage extends StatefulWidget {
   @override
-  GuidelinesPageState createState() => GuidelinesPageState();
+  WebviewPageState createState() => WebviewPageState();
+
+  WebviewPage({
+    @required this.title,
+    @required this.url,
+  });
+
+  final String title;
+  final String url;
 }
 
-class GuidelinesPageState extends State<GuidelinesPage> {
+class WebviewPageState extends State<WebviewPage> {
   final Completer<WebViewController> _controller =
   Completer<WebViewController>();
 
@@ -23,7 +31,7 @@ class GuidelinesPageState extends State<GuidelinesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(
-          title: "WHO Guidelines",
+          title: widget.title,
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.info),
@@ -37,7 +45,7 @@ class GuidelinesPageState extends State<GuidelinesPage> {
         return Stack(
           children: <Widget>[
             WebView(
-              initialUrl: 'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/guidance-for-schools-workplaces-institutions',
+              initialUrl: widget.url,
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (WebViewController webViewController) {
                 _controller.complete(webViewController);

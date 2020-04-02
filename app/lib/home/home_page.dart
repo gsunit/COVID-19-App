@@ -3,13 +3,14 @@ import 'package:covid_19_app/feed/feed_page.dart';
 import 'package:covid_19_app/fonts/globe_icon.dart';
 import 'package:covid_19_app/fonts/india_icon.dart';
 import 'package:covid_19_app/fonts/twitter_icon.dart';
-import 'package:covid_19_app/guidelines/guidelines_page.dart';
+import 'package:covid_19_app/home/home_links.dart';
 import 'package:covid_19_app/home/home_tab.dart';
 import 'package:covid_19_app/home/user_status_widget.dart';
 import 'package:covid_19_app/models/user_model.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
 import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:covid_19_app/geolocation/geolocation.dart';
+import 'package:covid_19_app/webview_page.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -48,7 +49,10 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               child: Text("Guidelines"),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>  GuidelinesPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  WebviewPage(
+                  title: "WHO Guidelines",
+                  url: 'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/guidance-for-schools-workplaces-institutions',
+                )));
               },
             ),
             RaisedButton(
@@ -76,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               UserStatusWidget(user: widget.user,),
               SizedBox(height: 15.0),
@@ -87,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 10.0,),
               Text("Stay updated. Stay safe.", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-              SizedBox(height: 10.0,),
+              SizedBox(height: 15.0,),
               HomeTab(
                 title: "Latest Updates",
                 icon: TwitterIcon.twitter,
@@ -105,6 +110,36 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => CovidVisualizerPage()));
                 },
               ),
+              SizedBox(height: 25.0,),
+              Text("More information on COVID-19", style: TextStyle(fontSize: 16.0, color: Colors.black45)),
+              SizedBox(height: 10.0,),
+              HomeLinks(
+                title: "Infection prevention and control",
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebviewPage(
+                    title: "WHO Guidelines",
+                    url: 'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/infection-prevention-and-control',
+                  )));
+                },
+              ),
+              HomeLinks(
+                title: "Work from home guide",
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebviewPage(
+                    title: "Blogpost",
+                    url: 'https://blog.trello.com/work-from-home-guides'
+                  )));
+                },
+              ),
+              HomeLinks(
+                title: "Reducing animal-human transmission",
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebviewPage(
+                    title: "WHO Guidelines",
+                    url: 'https://www.who.int/health-topics/coronavirus/who-recommendations-to-reduce-risk-of-transmission-of-emerging-pathogens-from-animals-to-humans-in-live-animal-markets'
+                  )));
+                },
+              )
             ],
           ),
         ),
