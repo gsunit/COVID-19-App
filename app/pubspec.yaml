@@ -55,6 +55,7 @@ flutter:
   assets:
    - ./assets/twitter.png
    - ./assets/youtube.png
+   - ./assets/google.png
   
   fonts:
     - family: custom_icons

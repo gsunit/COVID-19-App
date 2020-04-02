@@ -24,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //   title: Text(widget.title),
       // ),
       appBar: customAppbar(title: widget.title),
-      body: Center(
+      drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -60,6 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ],
         ),
+      ),
+      body: Center(
+        
       ),
     );
   }
