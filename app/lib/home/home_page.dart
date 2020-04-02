@@ -111,15 +111,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => CovidVisualizerPage()));
                 },
               ),
-              SizedBox(height: 25.0,),
+              SizedBox(height: 45.0,),
               Text("Did you take your Vitamin-C today?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-              SizedBox(height: 25.0,),
+              SizedBox(height: 15.0,),
               ReverseCountdown(),
-              SizedBox(height: 25.0,),
+              SizedBox(height: 45.0,),
               Image.asset("./assets/who.png"),
               // SizedBox(height: 25.0,),
               // Text("More information on COVID-19", style: TextStyle(fontSize: 16.0, color: Colors.black45)),
-              SizedBox(height: 10.0,),
+              // SizedBox(height: 10.0,),
               HomeLinks(
                 title: "Infection prevention and control",
                 onTap: () {
