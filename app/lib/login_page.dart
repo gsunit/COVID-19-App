@@ -1,4 +1,5 @@
-import 'package:covid_19_app/home_page.dart';
+import 'package:covid_19_app/home/home_page.dart';
+import 'package:covid_19_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,7 +23,16 @@ class _LoginPageState extends State<LoginPage> {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'COVID-19 App')));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
+                  title: 'COVID-19 App',
+                  user: UserModel(
+                    email: "test@test.com",
+                    name: "test test",
+                    photo: "",
+                    status: "unsafe",
+                    uid: ""
+                  ),
+                )));
               },
             ),
           ),

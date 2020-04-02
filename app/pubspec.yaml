@@ -56,6 +56,9 @@ flutter:
    - ./assets/twitter.png
    - ./assets/youtube.png
    - ./assets/google.png
+   - ./assets/neutral.jpg
+   - ./assets/safe.jpg
+   - ./assets/unsafe.jpg
   
   fonts:
     - family: custom_icons
