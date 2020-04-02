@@ -1,5 +1,8 @@
 import 'package:covid_19_app/covid_visualizer/covid_visualizer_page.dart';
 import 'package:covid_19_app/feed/feed_page.dart';
+import 'package:covid_19_app/fonts/globe_icon.dart';
+import 'package:covid_19_app/fonts/india_icon.dart';
+import 'package:covid_19_app/fonts/twitter_icon.dart';
 import 'package:covid_19_app/guidelines/guidelines_page.dart';
 import 'package:covid_19_app/home/home_tab.dart';
 import 'package:covid_19_app/home/user_status_widget.dart';
@@ -7,7 +10,6 @@ import 'package:covid_19_app/models/user_model.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
 import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:covid_19_app/geolocation/geolocation.dart';
-import 'package:covid_19_app/util/custom_icons.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -88,12 +90,21 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 10.0,),
               HomeTab(
                 title: "Latest Updates",
-                icon: CustomIcons.twitter,
+                icon: TwitterIcon.twitter,
                 color: Colors.lightBlue,
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => FeedPage()));
                 },
-              )
+              ),
+              SizedBox(height: 5.0,),
+              HomeTab(
+                title: "Global Visualizer",
+                icon: GlobeIcon.globe,
+                color: Colors.lightGreen,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CovidVisualizerPage()));
+                },
+              ),
             ],
           ),
         ),

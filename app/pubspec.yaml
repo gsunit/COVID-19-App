@@ -63,9 +63,15 @@ flutter:
    - ./assets/unsafe.jpg
   
   fonts:
-    - family: custom_icons
+    - family: TwitterIcon
       fonts:
-        - asset: assets/fonts/twitter_icon.ttf
+        - asset: assets/fonts/TwitterIcon.ttf
+    - family: GlobeIcon
+      fonts:
+        - asset: assets/fonts/GlobeIcon.ttf
+    - family: IndiaIcon
+      fonts:
+        - asset: assets/fonts/IndiaIcon.ttf 
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

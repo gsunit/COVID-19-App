@@ -1,5 +1,5 @@
+import 'package:covid_19_app/fonts/twitter_icon.dart';
 import 'package:covid_19_app/models/tweet_model.dart';
-import 'package:covid_19_app/util/custom_icons.dart';
 import 'package:covid_19_app/util/util_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -90,7 +90,7 @@ class _TweetCardState extends State<TweetCard> {
 
                 ],
               ),
-              Icon(CustomIcons.twitter, color: Colors.blue)
+              Icon(TwitterIcon.twitter, color: Colors.blue)
             ],
           ),
           SizedBox(height: 10.0,),

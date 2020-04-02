@@ -2,7 +2,8 @@ import 'package:covid_19_app/feed/govt_updates_page.dart';
 import 'package:covid_19_app/feed/news_feed_page.dart';
 import 'package:covid_19_app/feed/tweets_feed_page.dart';
 import 'package:covid_19_app/feed/video_feed_page.dart';
-import 'package:covid_19_app/util/custom_icons.dart';
+import 'package:covid_19_app/fonts/india_icon.dart';
+import 'package:covid_19_app/fonts/twitter_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
   
@@ -29,7 +30,7 @@ class _FeedPageState extends State<FeedPage> {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(
-            iconData: CustomIcons.twitter,
+            iconData: TwitterIcon.twitter,
             title: "Tweets",
           ),
           TabData(
@@ -41,7 +42,7 @@ class _FeedPageState extends State<FeedPage> {
             title: "News"
           ),
           TabData(
-            iconData: Icons.home,
+            iconData: IndiaIcon.indian_emblem,
             title: "Govt"
           ),
         ],
