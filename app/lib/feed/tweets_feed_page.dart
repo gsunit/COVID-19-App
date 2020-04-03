@@ -24,65 +24,72 @@ class _TweetsFeedPageState extends State<TweetsFeedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(title: "Tweets"),
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Center(
-            child: StreamBuilder(
-              stream: Firestore.instance.collection('tweets').snapshots(),
-              builder: (BuildContext context, snapshot) {
-                if(snapshot.connectionState == ConnectionState.waiting){
-                  return CircularProgressIndicator();
-                }
-                if(snapshot.hasData) {
-                  if(snapshot.data != null) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: EasyRefresh.custom(
-                            header: BallPulseHeader(color: Colors.blue),
-                            footer: BallPulseFooter(),
-                            onRefresh: _handleRefresh,
-                            key: _refreshIndicatorKey,
-                            slivers: <Widget>[
-                              AnimationLimiter(
-                                child: SliverList(
-                                  delegate: SliverChildBuilderDelegate(
-                                    (context, index) {
-                                      return AnimationConfiguration.staggeredList(
-                                        position: index,
-                                        duration: const Duration(milliseconds: 300),
-                                          child: SlideAnimation(
-                                            child: FadeInAnimation(
-                                              child: TweetCard(
-                                              tweet: new TweetModel(
-                                                handle: snapshot.data.documents[index]['handle'],
-                                                link: snapshot.data.documents[index]['link'],
-                                                time: snapshot.data.documents[index]['time'],
-                                                tweet: snapshot.data.documents[index]['tweet'],
-                                                hashTag: snapshot.data.documents[index]['hashTag']
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: Image.asset("./assets/twitter.png"),
+          ),
+          Container(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Center(
+                child: StreamBuilder(
+                  stream: Firestore.instance.collection('tweets').snapshots(),
+                  builder: (BuildContext context, snapshot) {
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return CircularProgressIndicator();
+                    }
+                    if(snapshot.hasData) {
+                      if(snapshot.data != null) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: EasyRefresh.custom(
+                                header: BallPulseHeader(color: Colors.blue),
+                                footer: BallPulseFooter(),
+                                onRefresh: _handleRefresh,
+                                key: _refreshIndicatorKey,
+                                slivers: <Widget>[
+                                  AnimationLimiter(
+                                    child: SliverList(
+                                      delegate: SliverChildBuilderDelegate(
+                                        (context, index) {
+                                          return AnimationConfiguration.staggeredList(
+                                            position: index,
+                                            duration: const Duration(milliseconds: 300),
+                                              child: SlideAnimation(
+                                                child: FadeInAnimation(
+                                                  child: TweetCard(
+                                                  tweet: new TweetModel(
+                                                    handle: snapshot.data.documents[index]['handle'],
+                                                    link: snapshot.data.documents[index]['link'],
+                                                    time: snapshot.data.documents[index]['time'],
+                                                    tweet: snapshot.data.documents[index]['tweet'],
+                                                    hashTag: snapshot.data.documents[index]['hashTag']
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    childCount: snapshot.data.documents.length,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    );
-                  }
-                }
-              },
+                                          );
+                                        },
+                                        childCount: snapshot.data.documents.length,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    }
+                  },
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

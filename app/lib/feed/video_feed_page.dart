@@ -24,64 +24,71 @@ class _VideoFeedPageState extends State<VideoFeedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(title: "Video Feed"),
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Center(
-            child: StreamBuilder(
-              stream: Firestore.instance.collection('videos').snapshots(),
-              builder: (BuildContext context, snapshot) {
-                if(snapshot.connectionState == ConnectionState.waiting){
-                  return CircularProgressIndicator();
-                }
-                if(snapshot.hasData) {
-                  if(snapshot.data != null) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: EasyRefresh.custom(
-                            header: BallPulseHeader(color: Colors.blue),
-                            footer: BallPulseFooter(),
-                            onRefresh: _handleRefresh,
-                            key: _refreshIndicatorKey,
-                            slivers: <Widget>[
-                              AnimationLimiter(
-                                child: SliverList(
-                                  delegate: SliverChildBuilderDelegate(
-                                    (context, index) {
-                                      return AnimationConfiguration.staggeredList(
-                                        position: index,
-                                        duration: const Duration(milliseconds: 300),
-                                          child: SlideAnimation(
-                                            child: FadeInAnimation(
-                                              child: VideoCard(
-                                              video: new VideoModel(
-                                                channel: snapshot.data.documents[index]['channel'],
-                                                link: snapshot.data.documents[index]['link'],
-                                                time: snapshot.data.documents[index]['time'],
-                                                thumbnail: snapshot.data.documents[index]['thumbnail'],
-                                                title: snapshot.data.documents[index]['title'],                                              ),
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: Image.asset("./assets/youtube.png", width: MediaQuery.of(context).size.width*0.8,),
+          ),
+          Container(
+            child: Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Center(
+                child: StreamBuilder(
+                  stream: Firestore.instance.collection('videos').snapshots(),
+                  builder: (BuildContext context, snapshot) {
+                    if(snapshot.connectionState == ConnectionState.waiting){
+                      return CircularProgressIndicator();
+                    }
+                    if(snapshot.hasData) {
+                      if(snapshot.data != null) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: EasyRefresh.custom(
+                                header: BallPulseHeader(color: Colors.blue),
+                                footer: BallPulseFooter(),
+                                onRefresh: _handleRefresh,
+                                key: _refreshIndicatorKey,
+                                slivers: <Widget>[
+                                  AnimationLimiter(
+                                    child: SliverList(
+                                      delegate: SliverChildBuilderDelegate(
+                                        (context, index) {
+                                          return AnimationConfiguration.staggeredList(
+                                            position: index,
+                                            duration: const Duration(milliseconds: 300),
+                                              child: SlideAnimation(
+                                                child: FadeInAnimation(
+                                                  child: VideoCard(
+                                                  video: new VideoModel(
+                                                    channel: snapshot.data.documents[index]['channel'],
+                                                    link: snapshot.data.documents[index]['link'],
+                                                    time: snapshot.data.documents[index]['time'],
+                                                    thumbnail: snapshot.data.documents[index]['thumbnail'],
+                                                    title: snapshot.data.documents[index]['title'],                                              ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    childCount: snapshot.data.documents.length,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    );
-                  }
-                }
-              },
+                                          );
+                                        },
+                                        childCount: snapshot.data.documents.length,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    }
+                  },
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
