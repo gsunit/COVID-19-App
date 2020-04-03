@@ -1,19 +1,22 @@
-# covid_19_app
+# COVID-19 App
 
-A new Flutter project.
 
-## Getting Started
+## Objectives
+- [x] Infection protection and control / WASH
+- [ ] Guidance for schools/workplaces & institutions
+- [ ] Points of entry / mass gatherings
+- [x] Reduction of transmission from animals to humans 
+- [x] 12 guides to help work from home 
+- [x] Reminders to wash hands, drinking warm water, eating citric fruits, 
+- [ ] Location finder and raising alert, if someone goes out from his/her home
+- [ ] Ability to update Govt Guidelines from time to time as issued. This can be a page which can be hosted on github
+- [x] Statistics about the people affected in the world,  India and Karnataka/ Bangalore section – If possible show https://www.covidvisualizer.com otherwise add a link 
+- [x] Include state wise statistics from https://www.mohfw.gov.in
+- [ ] Links to websites such as WHO, MOH GOI
+- [x] Twitter feed from WHO, MOH GOI
+- [x] Links/integrations to donate to PM Cares fund and state relief funds. Details can be found in this page.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 
 ## Script for notifications
 
