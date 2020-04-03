@@ -1,12 +1,10 @@
 import 'package:covid_19_app/covid_visualizer/covid_visualizer_page.dart';
 import 'package:covid_19_app/feed/feed_page.dart';
 import 'package:covid_19_app/fonts/globe_icon.dart';
-import 'package:covid_19_app/fonts/india_icon.dart';
 import 'package:covid_19_app/fonts/twitter_icon.dart';
 import 'package:covid_19_app/home/home_links.dart';
 import 'package:covid_19_app/home/home_tab.dart';
 import 'package:covid_19_app/home/reverse_countdown.dart';
-import 'package:covid_19_app/home/user_status_widget.dart';
 import 'package:covid_19_app/models/user_model.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
 import 'package:covid_19_app/util/custom_appbar.dart';

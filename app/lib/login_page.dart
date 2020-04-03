@@ -1,5 +1,4 @@
-import 'package:covid_19_app/home/home_page.dart';
-import 'package:covid_19_app/models/user_model.dart';
+import 'package:covid_19_app/util/services.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,19 +20,21 @@ class _LoginPageState extends State<LoginPage> {
                 './assets/google.png',
                 height: 45.0,
               ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
-                  title: 'COVID-19 App',
-                  hrs: 15,
-                  user: UserModel(
-                    email: "test@test.com",
-                    name: "test test",
-                    photo: "",
-                    status: "safe",
-                    uid: ""
-                  ),
-                )));
+              onTap: () async {
+
+                Services().signInWithGoogle(context);
+                // Navigator.pop(context);
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
+                //   title: 'COVID-19 App',
+                //   hrs: 15,
+                //   user: UserModel(
+                //     email: "test@test.com",
+                //     name: "test test",
+                //     photo: "",
+                //     status: "safe",
+                //     uid: ""
+                //   ),
+                // )));
               },
             ),
           ),
