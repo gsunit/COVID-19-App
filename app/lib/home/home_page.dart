@@ -8,7 +8,6 @@ import 'package:covid_19_app/home/reverse_countdown.dart';
 import 'package:covid_19_app/models/user_model.dart';
 import 'package:covid_19_app/notifications/notif_drawer.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
-import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:covid_19_app/geolocation/geolocation.dart';
 import 'package:covid_19_app/webview_page.dart';
 import 'package:flutter/material.dart';

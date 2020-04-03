@@ -1,5 +1,4 @@
-import 'package:covid_19_app/feed/govt_updates_page.dart';
-import 'package:covid_19_app/feed/news_feed_page.dart';
+import 'package:covid_19_app/feed/govt_guidelines_page.dart';
 import 'package:covid_19_app/feed/tweets_feed_page.dart';
 import 'package:covid_19_app/feed/video_feed_page.dart';
 import 'package:covid_19_app/fonts/india_icon.dart';
@@ -38,10 +37,6 @@ class _FeedPageState extends State<FeedPage> {
             title: "Videos",
           ),
           TabData(
-            iconData: Icons.library_books,
-            title: "News"
-          ),
-          TabData(
             iconData: IndiaIcon.indian_emblem,
             title: "Govt"
           ),
@@ -64,9 +59,7 @@ class _FeedPageState extends State<FeedPage> {
       case 1:
         return VideoFeedPage();
       case 2:
-        return NewsFeedPage();
-      case 3:
-        return GovtUpdatesPage();
+        return GovtGuidelinesPage();
       default:
         return TweetsFeedPage();
     }
