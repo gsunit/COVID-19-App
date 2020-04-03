@@ -75,7 +75,7 @@ class Services {
     assert(await user.getIdToken() != null);
 
     final FirebaseUser currentUser = await _auth.currentUser();
-
+    int visits;
     print("signed in as ${currentUser.displayName}");
     // if(UserManagement().isFirstGoogleLogin(currentUser) == true) {
     //   UserManagement().storeNewGoogleUser(currentUser, context);
@@ -86,7 +86,6 @@ class Services {
         Services().storeNewUser(currentUser, context);
       }
       else {
-        var visits;
         Firestore.instance.collection('users').document(user.email).get().then((snapshot){
           visits = snapshot.data['visits'];
           print("db #7: visits: $visits");
@@ -99,7 +98,7 @@ class Services {
     }).catchError((e) {
       print("e #40: $e");
     });
-    assert(user.uid == currentUser.uid);
+    assert(user.uid == currentUser.uid && user.uid != null);
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage(
       title: "COVID-19 App",
       user: UserModel(
@@ -108,8 +107,13 @@ class Services {
         photo: user.photoUrl,
         status: 'neutral',
         uid: user.uid,
+        visits: visits,
       ),
       hrs: 15,
     )));
+  }
+
+  updateUserVisits() async {
+
   }
 }

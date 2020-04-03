@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:covid_19_app/home/home_page.dart';
 import 'package:covid_19_app/models/user_model.dart';
 import 'package:flip_panel/flip_panel.dart';
@@ -129,11 +130,20 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
     
     // _duration = dDay.difference(now);
     // _transaction = initiateTransaction(appName, amtController.text);
-    setState(() {
+    setState(() async {
+      final snackBar = SnackBar(
+        content: Text('Setting reminder for ${amtController.text}:00 hrs'),
+      );
+      var userSnapshot = await Firestore.instance.collection('users').document(widget.user.email).get()
+        .catchError((e){print("e #61: $e");});
+      UserModel userModel = widget.user;
+      userModel.visits = userSnapshot.data['visits'];
+
+      Scaffold.of(context).showSnackBar(snackBar);
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
         title: widget.homeTitle,
-        user: widget.user,
+        user: userModel,
         hrs: int.parse(amtController.text),
       )));
     });
