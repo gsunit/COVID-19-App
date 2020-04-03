@@ -136,10 +136,6 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
         user: widget.user,
         hrs: int.parse(amtController.text),
       )));
-      final snackBar = SnackBar(
-        content: Text('Please enter a number between 0 and 23'),
-      );
-      Scaffold.of(context).showSnackBar(snackBar);
     });
   }
 

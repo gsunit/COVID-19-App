@@ -16,6 +16,7 @@ class Services {
       'uid': user.uid,
       'name': user.displayName,
       'status': 'neutral',
+      'visits': 1
     }).then((value) {
       // Navigator.of(context).pushReplacementNamed('/homepage');
     }).catchError((e) {
@@ -83,6 +84,17 @@ class Services {
       if (isFirstLogin == true) {
         print("db #40: Storing new user ${user.email}");
         Services().storeNewUser(currentUser, context);
+      }
+      else {
+        var visits;
+        Firestore.instance.collection('users').document(user.email).get().then((snapshot){
+          visits = snapshot.data['visits'];
+          print("db #7: visits: $visits");
+          Firestore.instance.collection('users').document(user.email).updateData({
+            'visits': visits+1
+          });
+        }).catchError((e){print("e #45: $e");});
+        
       }
     }).catchError((e) {
       print("e #40: $e");
