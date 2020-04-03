@@ -1,19 +1,23 @@
+import 'dart:async';
+
 import 'package:covid_19_app/covid_visualizer/covid_visualizer_page.dart';
 import 'package:covid_19_app/feed/feed_page.dart';
 import 'package:covid_19_app/fonts/globe_icon.dart';
 import 'package:covid_19_app/fonts/twitter_icon.dart';
+import 'package:covid_19_app/geolocation/geolocation.dart';
 import 'package:covid_19_app/home/home_links.dart';
 import 'package:covid_19_app/home/home_tab.dart';
 import 'package:covid_19_app/home/reverse_countdown.dart';
 import 'package:covid_19_app/models/user_model.dart';
 import 'package:covid_19_app/notifications/notif_drawer.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
-import 'package:covid_19_app/util/custom_appbar.dart';
-import 'package:covid_19_app/geolocation/geolocation.dart';
 import 'package:covid_19_app/webview_page.dart';
-import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
   if (message.containsKey('data')) {
@@ -28,7 +32,6 @@ Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
 
   // Or do other work.
 }
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
@@ -47,27 +50,106 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  @override
-  void initState(){
-    super.initState();
+  void _showDialog(Map<String, dynamic> message) {
+    //print(message['notification']['content']);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(message['notification']['title']),
+            content: new Text(message['notification']['body']),
+            actions: <Widget>[
+              new FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: new Text("Close"))
+            ],
+          );
+        });
+  }
+
+  Future<void> dailyNotifications() async {
+    var time = Time(10, 0, 0);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'repeatDailyAtTime channel id',
+        'repeatDailyAtTime channel name',
+        'repeatDailyAtTime description');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.showDailyAtTime(0, 'Alert!',
+        'Time to take Vitamin C!', time, platformChannelSpecifics);
+  }
+
+  /// Schedules a notification that specifies a different icon, sound and vibration pattern
+  Future<void> _scheduleNotification() async {
+    var scheduledNotificationDateTime =
+        DateTime.now().add(Duration(seconds: 5));
+//    var vibrationPattern = Int64List(4);
+//    vibrationPattern[0] = 0;
+//    vibrationPattern[1] = 1000;
+//    vibrationPattern[2] = 5000;
+//    vibrationPattern[3] = 2000;
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+
+    var iOSPlatformChannelSpecifics =
+        IOSNotificationDetails(sound: 'slow_spring_board.aiff');
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        scheduledNotificationDateTime,
+        platformChannelSpecifics);
+  }
+
+  Future<void> _showNotification() async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your channel id', 'your channel name', 'your channel description',
+        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+        0, 'plain title', 'plain body', platformChannelSpecifics,
+        payload: 'item x');
+  }
+
+  void _initNotifications() {
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('app_icon');
+    var initializationSettingsIOS =
+        IOSInitializationSettings(onDidReceiveLocalNotification: null);
+    var initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: null);
+  }
+
+  void _initFirebaseCloudMessaging() {
     _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        //_showItemDialog(message);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        //_navigateToItemDetail(message);
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        //_navigateToItemDetail(message);
-      },
-      onBackgroundMessage: myBackgroundMessageHandler
-    );
+        onMessage: (Map<String, dynamic> message) async {
+          print("onMessage: $message");
+          _showDialog(message);
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          print("onLaunch: $message");
+          _showDialog(message);
+          //_navigateToItemDetail(message);
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print("onResume: $message");
+          _showDialog(message);
+          //_navigateToItemDetail(message);
+        },
+        onBackgroundMessage: myBackgroundMessageHandler);
     _firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(
             sound: true, badge: true, alert: true, provisional: true));
@@ -79,6 +161,14 @@ class _MyHomePageState extends State<MyHomePage> {
       assert(token != null);
       print(token);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initNotifications();
+    _initFirebaseCloudMessaging();
+    dailyNotifications();
   }
 
   @override
@@ -219,6 +309,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 user: widget.user,
                 homeTitle: widget.title,
                 hrs: widget.hrs,
+              ),
+              RaisedButton(
+                child: Text("Schedule a Notification"),
+                onPressed: () async {
+                  await _scheduleNotification();
+                },
               ),
               SizedBox(
                 height: 45.0,
