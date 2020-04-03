@@ -98,7 +98,8 @@ class Services {
           
           print("db #8: hrs_outside: $hrs");
           assert(user.uid == currentUser.uid && user.uid != null);
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage(
+          Navigator.pop(context);
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage(
             title: "COVID-19 App",
             user: UserModel(
               email: user.email,
