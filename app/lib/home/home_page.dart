@@ -6,11 +6,29 @@ import 'package:covid_19_app/home/home_links.dart';
 import 'package:covid_19_app/home/home_tab.dart';
 import 'package:covid_19_app/home/reverse_countdown.dart';
 import 'package:covid_19_app/models/user_model.dart';
+import 'package:covid_19_app/notifications/notif_drawer.dart';
 import 'package:covid_19_app/payments/payments_page.dart';
 import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:covid_19_app/geolocation/geolocation.dart';
 import 'package:covid_19_app/webview_page.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) {
+  if (message.containsKey('data')) {
+    // Handle data message
+    final dynamic data = message['data'];
+  }
+
+  if (message.containsKey('notification')) {
+    // Handle notification message
+    final dynamic notification = message['notification'];
+  }
+
+  // Or do other work.
+}
+
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
@@ -30,48 +48,109 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  @override
+  void initState(){
+    super.initState();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        //_showItemDialog(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        //_navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        //_navigateToItemDetail(message);
+      },
+      onBackgroundMessage: myBackgroundMessageHandler
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print(token);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(widget.title),
       // ),
-      appBar: customAppbar(title: widget.title),
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+          style: TextStyle(
+            color: Colors.blue,
+          ),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.blue),
+        actions: <Widget>[
+          new IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NotifDrawerPage()));
+              })
+        ],
+      ),
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
               child: Text("COVID Visualizer"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CovidVisualizerPage()));
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CovidVisualizerPage()));
               },
             ),
             RaisedButton(
               child: Text("Guidelines"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>  WebviewPage(
-                  title: "WHO Guidelines",
-                  url: 'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/guidance-for-schools-workplaces-institutions',
-                )));
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WebviewPage(
+                              title: "WHO Guidelines",
+                              url:
+                                  'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/guidance-for-schools-workplaces-institutions',
+                            )));
               },
             ),
             RaisedButton(
               child: Text("Feed"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => FeedPage()));
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FeedPage()));
               },
             ),
             RaisedButton(
               child: Text("Payments"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsPage()));
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PaymentsPage()));
               },
             ),
             RaisedButton(
               child: Text("Geolocation"),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => GeolocationPage()));
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => GeolocationPage()));
               },
             )
           ],
@@ -92,43 +171,58 @@ class _MyHomePageState extends State<MyHomePage> {
               //   thickness: 1.5,
               // ),
 
-
-
-              SizedBox(height: 10.0,),
-              Text("Stay updated. Stay safe.", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-              SizedBox(height: 15.0,),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Stay updated. Stay safe.",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
               HomeTab(
                 title: "Latest Updates",
                 icon: TwitterIcon.twitter,
                 color: Colors.lightBlue,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => FeedPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FeedPage()));
                 },
               ),
-              SizedBox(height: 5.0,),
+              SizedBox(
+                height: 5.0,
+              ),
               HomeTab(
                 title: "COVID-19 Statistics",
                 icon: GlobeIcon.globe,
                 color: Colors.lightGreen,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => CovidVisualizerPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CovidVisualizerPage()));
                 },
               ),
-              SizedBox(height: 45.0,),
+              SizedBox(
+                height: 45.0,
+              ),
 
-
-
-              Text("Did you take your Vitamin-C today?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-              SizedBox(height: 15.0,),
+              Text(
+                "Did you take your Vitamin-C today?",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
               ReverseCountdown(
                 user: widget.user,
                 homeTitle: widget.title,
                 hrs: widget.hrs,
               ),
-              SizedBox(height: 45.0,),
-
-
-
+              SizedBox(
+                height: 45.0,
+              ),
 
               Image.asset("./assets/who.png"),
               // SizedBox(height: 25.0,),
@@ -137,37 +231,51 @@ class _MyHomePageState extends State<MyHomePage> {
               HomeLinks(
                 title: "Infection prevention and control",
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebviewPage(
-                    title: "WHO Guidelines",
-                    url: 'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/infection-prevention-and-control',
-                  )));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WebviewPage(
+                                title: "WHO Guidelines",
+                                url:
+                                    'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/technical-guidance/infection-prevention-and-control',
+                              )));
                 },
               ),
               HomeLinks(
                 title: "Work from home guide",
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebviewPage(
-                    title: "Blogpost",
-                    url: 'https://blog.trello.com/work-from-home-guides'
-                  )));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WebviewPage(
+                              title: "Blogpost",
+                              url:
+                                  'https://blog.trello.com/work-from-home-guides')));
                 },
               ),
               HomeLinks(
                 title: "Reducing animal-human transmission",
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => WebviewPage(
-                    title: "WHO Guidelines",
-                    url: 'https://www.who.int/health-topics/coronavirus/who-recommendations-to-reduce-risk-of-transmission-of-emerging-pathogens-from-animals-to-humans-in-live-animal-markets'
-                  )));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WebviewPage(
+                              title: "WHO Guidelines",
+                              url:
+                                  'https://www.who.int/health-topics/coronavirus/who-recommendations-to-reduce-risk-of-transmission-of-emerging-pathogens-from-animals-to-humans-in-live-animal-markets')));
                 },
               ),
-              SizedBox(height: 45.0,),
+              SizedBox(
+                height: 45.0,
+              ),
 
-
-
-
-              Text("Stretch out a helping hand", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),),
-              SizedBox(height: 15.0,),
+              Text(
+                "Stretch out a helping hand",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
               Container(
                 child: Image.asset("./assets/pmcares.jpeg"),
                 height: 250.0,
@@ -176,10 +284,14 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 alignment: Alignment.center,
                 child: RaisedButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentsPage()));
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaymentsPage()));
                   },
-                  child: Text("Donate to PM Cares Fund", style: TextStyle(color: Colors.white)),
+                  child: Text("Donate to PM Cares Fund",
+                      style: TextStyle(color: Colors.white)),
                   color: Colors.lightGreen,
                 ),
               ),
