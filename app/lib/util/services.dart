@@ -16,7 +16,8 @@ class Services {
       'uid': user.uid,
       'name': user.displayName,
       'status': 'neutral',
-      'visits': 1
+      'visits': 1,
+      'hrs': 15,
     }).then((value) {
       // Navigator.of(context).pushReplacementNamed('/homepage');
     }).catchError((e) {
@@ -56,6 +57,7 @@ class Services {
   }
 
   void signInWithGoogle(BuildContext context) async {
+
     final GoogleSignIn _googleSignIn = new GoogleSignIn();
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -76,10 +78,10 @@ class Services {
 
     final FirebaseUser currentUser = await _auth.currentUser();
     int visits;
+    int hrs;
     print("signed in as ${currentUser.displayName}");
-    // if(UserManagement().isFirstGoogleLogin(currentUser) == true) {
-    //   UserManagement().storeNewGoogleUser(currentUser, context);
-    // }
+
+
     await Services().isFirstLogin(currentUser).then((isFirstLogin) {
       if (isFirstLogin == true) {
         print("db #40: Storing new user ${user.email}");
@@ -88,29 +90,34 @@ class Services {
       else {
         Firestore.instance.collection('users').document(user.email).get().then((snapshot){
           visits = snapshot.data['visits'];
-          print("db #7: visits: $visits");
+          hrs = int.parse(snapshot.data['hrs']);
+          print("db #7: visits: $visits +1, hrs: $hrs");
           Firestore.instance.collection('users').document(user.email).updateData({
             'visits': visits+1
           });
+          
+          print("db #8: hrs_outside: $hrs");
+          assert(user.uid == currentUser.uid && user.uid != null);
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage(
+            title: "COVID-19 App",
+            user: UserModel(
+              email: user.email,
+              name: user.displayName,
+              photo: user.photoUrl,
+              status: 'neutral',
+              uid: user.uid,
+              visits: visits,
+              hrs: hrs,
+            ),
+          )));
+
         }).catchError((e){print("e #45: $e");});
         
       }
     }).catchError((e) {
       print("e #40: $e");
     });
-    assert(user.uid == currentUser.uid && user.uid != null);
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyHomePage(
-      title: "COVID-19 App",
-      user: UserModel(
-        email: user.email,
-        name: user.displayName,
-        photo: user.photoUrl,
-        status: 'neutral',
-        uid: user.uid,
-        visits: visits,
-      ),
-      hrs: 15,
-    )));
+    
   }
 
   updateUserVisits() async {

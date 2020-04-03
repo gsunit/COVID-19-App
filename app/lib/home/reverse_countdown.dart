@@ -10,12 +10,10 @@ class ReverseCountdown extends StatefulWidget {
   ReverseCountdown({
     @required this.homeTitle,
     @required this.user,
-    @required this.hrs,
   });
 
   final String homeTitle;
   final UserModel user;
-  final int hrs;
 
   @override
   _ReverseCountdownState createState() => _ReverseCountdownState();
@@ -27,7 +25,7 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
   @override
   void initState() { 
     super.initState();
-    amtController.text = widget.hrs.toString();
+    amtController.text = widget.user.hrs.toString();
   }
 
   @override
@@ -45,7 +43,8 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
 
   @override
   Widget build(BuildContext context) {
-    dDay = _setDDay(widget.hrs, now);
+    print("db #45: hrs in rev_countdown: ${widget.user.hrs}");
+    dDay = _setDDay(widget.user.hrs, now);
 
     Duration _duration = dDay.difference(now);
 
@@ -82,7 +81,7 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
     return Column(
       children: <Widget>[
         RaisedButton(
-          onPressed: (){
+          onPressed: () async {
             _checkValidation(context);
           },
           child: Text("Remind me daily at (hrs)", style: TextStyle(color: Colors.white)),
@@ -114,14 +113,14 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
     );
   }
 
-  void _checkValidation(BuildContext context) {
+  void _checkValidation(BuildContext context) async {
     if (amtController.text == "") {
       final snackBar = SnackBar(
         content: Text('Please enter the time'),
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
-    if(int.parse(amtController.text) > 23) {
+    else if(int.parse(amtController.text) > 23) {
       final snackBar = SnackBar(
         content: Text('Please enter a number between 0 and 23'),
       );
@@ -130,23 +129,26 @@ class _ReverseCountdownState extends State<ReverseCountdown> {
     
     // _duration = dDay.difference(now);
     // _transaction = initiateTransaction(appName, amtController.text);
-    setState(() async {
-      final snackBar = SnackBar(
-        content: Text('Setting reminder for ${amtController.text}:00 hrs'),
-      );
-      var userSnapshot = await Firestore.instance.collection('users').document(widget.user.email).get()
-        .catchError((e){print("e #61: $e");});
-      UserModel userModel = widget.user;
-      userModel.visits = userSnapshot.data['visits'];
+    final snackBar = SnackBar(
+      content: Text('Setting reminder for ${amtController.text}:00 hrs'),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
 
-      Scaffold.of(context).showSnackBar(snackBar);
-      Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
-        title: widget.homeTitle,
-        user: userModel,
-        hrs: int.parse(amtController.text),
-      )));
-    });
+    Firestore.instance.collection('users').document(widget.user.email).updateData({
+      'hrs': amtController.text
+    }).catchError((e){print("e #60: $e");});
+    var userSnapshot = await Firestore.instance.collection('users').document(widget.user.email).get()
+      .catchError((e){print("e #61: $e");});
+    UserModel userModel = widget.user;
+    userModel.visits = userSnapshot.data['visits'];
+    userModel.hrs = int.parse(userSnapshot.data['hrs']);
+
+    Scaffold.of(context).showSnackBar(snackBar);
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(
+      title: widget.homeTitle,
+      user: userModel,
+    )));
   }
 
   _setDDay(int hrs, DateTime now) {

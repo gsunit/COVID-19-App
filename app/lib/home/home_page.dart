@@ -35,12 +35,10 @@ class MyHomePage extends StatefulWidget {
     Key key,
     @required this.title,
     @required this.user,
-    @required this.hrs,
   }) : super(key: key);
 
   final String title;
   final UserModel user;
-  final int hrs;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -83,6 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    print("db #46: hrs in home_page: ${widget.user.hrs}");
+
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(widget.title),
@@ -218,7 +219,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ReverseCountdown(
                 user: widget.user,
                 homeTitle: widget.title,
-                hrs: widget.hrs,
               ),
               SizedBox(
                 height: 45.0,
