@@ -7,6 +7,8 @@ class UserModel {
   final String photo;
   final String uid;
   final String status;
+  int hrs;
+  int visits;
 
   UserModel({
     @required this.name,
@@ -14,6 +16,8 @@ class UserModel {
     @required this.photo,
     @required this.uid,
     @required this.status,
+    @required this.visits,
+    @required this.hrs,
   });
 
 }

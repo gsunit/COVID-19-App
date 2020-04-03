@@ -1,4 +1,4 @@
-import 'package:covid_19_app/feed/govt_updates_page.dart';
+import 'package:covid_19_app/feed/govt_guidelines_page.dart';
 import 'package:covid_19_app/feed/news_feed_page.dart';
 import 'package:covid_19_app/feed/tweets_feed_page.dart';
 import 'package:covid_19_app/fonts/globe_icon.dart';
@@ -82,7 +82,7 @@ class _CovidVisualizerPageState extends State<CovidVisualizerPage> {
       case 2:
         return NewsFeedPage();
       case 3:
-        return GovtUpdatesPage();
+        return GovtGuidelinesPage();
       default:
         return TweetsFeedPage();
     }

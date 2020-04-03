@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:covid_19_app/feed/tweet_card.dart';
-import 'package:covid_19_app/models/tweet_model.dart';
+import 'package:covid_19_app/feed/govt_guidelines_card.dart';
+import 'package:covid_19_app/models/govt_guidelines_model.dart';
 import 'package:covid_19_app/util/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/ball_pulse_footer.dart';
@@ -10,12 +10,12 @@ import 'package:flutter_easyrefresh/ball_pulse_header.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class TweetsFeedPage extends StatefulWidget {
+class GovtGuidelinesPage extends StatefulWidget {
   @override
-  _TweetsFeedPageState createState() => _TweetsFeedPageState();
+  _GovtGuidelinesPage createState() => _GovtGuidelinesPage();
 }
 
-class _TweetsFeedPageState extends State<TweetsFeedPage> {
+class _GovtGuidelinesPage extends State<GovtGuidelinesPage> {
 
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
     new GlobalKey<RefreshIndicatorState>();
@@ -23,18 +23,18 @@ class _TweetsFeedPageState extends State<TweetsFeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(title: "Tweets"),
+      appBar: customAppbar(title: "Govt. Updates"),
       body: Stack(
         children: <Widget>[
           Center(
-            child: Image.asset("./assets/twitter.png"),
+            child: Image.asset("./assets/indian_emblem.png", width: MediaQuery.of(context).size.width*0.6),
           ),
           Container(
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Center(
                 child: StreamBuilder(
-                  stream: Firestore.instance.collection('tweets').snapshots(),
+                  stream: Firestore.instance.collection('guidelines').snapshots(),
                   builder: (BuildContext context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.waiting){
                       return CircularProgressIndicator();
@@ -60,13 +60,12 @@ class _TweetsFeedPageState extends State<TweetsFeedPage> {
                                             duration: const Duration(milliseconds: 300),
                                               child: SlideAnimation(
                                                 child: FadeInAnimation(
-                                                  child: TweetCard(
-                                                  tweet: new TweetModel(
+                                                  child: GovtGuidelinesCard(
+                                                  guideline: new GovtGuidelinesModel(
                                                     handle: snapshot.data.documents[index]['handle'],
                                                     link: snapshot.data.documents[index]['link'],
                                                     time: snapshot.data.documents[index]['time'],
-                                                    tweet: snapshot.data.documents[index]['tweet'],
-                                                    hashTag: snapshot.data.documents[index]['hashTag']
+                                                    title: snapshot.data.documents[index]['title'],
                                                   ),
                                                 ),
                                               ),
@@ -103,7 +102,7 @@ class _TweetsFeedPageState extends State<TweetsFeedPage> {
         setState(() {
         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> new NewsFeedPage()));
         print('new newsfeed');
-        new TweetsFeedPage();
+        new GovtGuidelinesPage();
       });
     });
     return completer.future;

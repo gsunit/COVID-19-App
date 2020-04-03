@@ -67,6 +67,7 @@ flutter:
    - ./assets/unsafe.jpg
    - ./assets/who.png
    - ./assets/pmcares.jpeg
+   - ./assets/indian_emblem.png
   
   fonts:
     - family: TwitterIcon
