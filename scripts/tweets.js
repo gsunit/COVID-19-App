@@ -1,10 +1,10 @@
-var Twitter = require('twitter');
-var config  = require('./config.js');
-var twitter_client = new Twitter(config["twitter"]);
+const Twitter = require('twitter');
+const config  = require(__dirname + '/config.js');
+const twitter_client = new Twitter(config["twitter"]);
 const admin = require('firebase-admin');
 
-var nconf = require('nconf');
-nconf.use('file', { file: './ids.log' });
+const nconf = require('nconf');
+nconf.use('file', { file: __dirname + '/ids.log' });
 
 // Set up parameters
 var api_endpoint = "statuses/user_timeline";
