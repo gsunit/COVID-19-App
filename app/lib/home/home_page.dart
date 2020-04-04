@@ -262,12 +262,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 user: widget.user,
                 homeTitle: widget.title,
               ),
-              RaisedButton(
-                child: Text("Schedule a Notification"),
-                onPressed: () async {
-                  await _scheduleNotification();
-                },
-              ),
+              // RaisedButton(
+              //   child: Text("Schedule a Notification"),
+              //   onPressed: () async {
+              //     await _scheduleNotification();
+              //   },
+              // ),
               SizedBox(
                 height: 45.0,
               ),
