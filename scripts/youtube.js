@@ -1,9 +1,9 @@
 const request = require('request');
-const config  = require('./config.js');
+const config  = require(__dirname + '/config.js');
 const admin = require('firebase-admin');
 
 const nconf = require('nconf');
-nconf.use('file', { file: './ids.log' });
+nconf.use('file', { file: __dirname + '/ids.log' });
 
 // set_date is a boolean to update last updated date
 const get_videos = function(username, channel_id, set_date){
